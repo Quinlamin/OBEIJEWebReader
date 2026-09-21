@@ -1,0 +1,63 @@
+{
+  "version": 2,
+  "dgSpecHash": "oi8rgbuec4E=",
+  "success": true,
+  "projectFilePath": "/home/lac/dotnet/OBEIJEWebReader/OBEIJEWebReader.csproj",
+  "expectedPackageFiles": [
+    "/home/lac/.nuget/packages/epubsharp.dll/1.1.5/epubsharp.dll.1.1.5.nupkg.sha512",
+    "/home/lac/.nuget/packages/libuv/1.9.1/libuv.1.9.1.nupkg.sha512",
+    "/home/lac/.nuget/packages/microsoft.aspnetcore.app.internal.assets/10.0.12/microsoft.aspnetcore.app.internal.assets.10.0.12.nupkg.sha512",
+    "/home/lac/.nuget/packages/microsoft.codeanalysis.analyzers/1.1.0/microsoft.codeanalysis.analyzers.1.1.0.nupkg.sha512",
+    "/home/lac/.nuget/packages/microsoft.codeanalysis.common/1.3.0/microsoft.codeanalysis.common.1.3.0.nupkg.sha512",
+    "/home/lac/.nuget/packages/microsoft.codeanalysis.csharp/1.3.0/microsoft.codeanalysis.csharp.1.3.0.nupkg.sha512",
+    "/home/lac/.nuget/packages/microsoft.codeanalysis.visualbasic/1.3.0/microsoft.codeanalysis.visualbasic.1.3.0.nupkg.sha512",
+    "/home/lac/.nuget/packages/microsoft.diasymreader.native/1.4.1/microsoft.diasymreader.native.1.4.1.nupkg.sha512",
+    "/home/lac/.nuget/packages/microsoft.netcore.app/1.1.1/microsoft.netcore.app.1.1.1.nupkg.sha512",
+    "/home/lac/.nuget/packages/microsoft.netcore.dotnethost/1.1.0/microsoft.netcore.dotnethost.1.1.0.nupkg.sha512",
+    "/home/lac/.nuget/packages/microsoft.netcore.dotnethostpolicy/1.1.0/microsoft.netcore.dotnethostpolicy.1.1.0.nupkg.sha512",
+    "/home/lac/.nuget/packages/microsoft.netcore.dotnethostresolver/1.1.0/microsoft.netcore.dotnethostresolver.1.1.0.nupkg.sha512",
+    "/home/lac/.nuget/packages/microsoft.netcore.jit/1.1.1/microsoft.netcore.jit.1.1.1.nupkg.sha512",
+    "/home/lac/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "/home/lac/.nuget/packages/microsoft.netcore.runtime.coreclr/1.1.1/microsoft.netcore.runtime.coreclr.1.1.1.nupkg.sha512",
+    "/home/lac/.nuget/packages/microsoft.netcore.windows.apisets/1.0.1/microsoft.netcore.windows.apisets.1.0.1.nupkg.sha512",
+    "/home/lac/.nuget/packages/netstandard.library/1.6.1/netstandard.library.1.6.1.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'Microsoft.NETCore.App' 1.1.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-7mfr-774f-w5r9",
+      "projectPath": "/home/lac/dotnet/OBEIJEWebReader/OBEIJEWebReader.csproj",
+      "warningLevel": 1,
+      "filePath": "/home/lac/dotnet/OBEIJEWebReader/OBEIJEWebReader.csproj",
+      "libraryId": "Microsoft.NETCore.App",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'Microsoft.NETCore.App' 1.1.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-8884-xcr4-r68p",
+      "projectPath": "/home/lac/dotnet/OBEIJEWebReader/OBEIJEWebReader.csproj",
+      "warningLevel": 1,
+      "filePath": "/home/lac/dotnet/OBEIJEWebReader/OBEIJEWebReader.csproj",
+      "libraryId": "Microsoft.NETCore.App",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'Microsoft.NETCore.Jit' 1.1.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-xcvr-qv8h-m7xw",
+      "projectPath": "/home/lac/dotnet/OBEIJEWebReader/OBEIJEWebReader.csproj",
+      "warningLevel": 1,
+      "filePath": "/home/lac/dotnet/OBEIJEWebReader/OBEIJEWebReader.csproj",
+      "libraryId": "Microsoft.NETCore.Jit",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
+}
