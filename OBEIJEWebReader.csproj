@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="EpubSharp.dll" Version="1.1.5" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.13.0" />
   </ItemGroup>
 
 </Project>

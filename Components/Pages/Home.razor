@@ -1,7 +1,128 @@
 ﻿@page "/"
+@using System.IO;
+@using System.IO.Compression;
+@using EpubSharp
+@using HtmlAgilityPack;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.SignalR
+@rendermode InteractiveServer
+@inject IJSRuntime JS
+<h3>Blazor EPUB Reader</h3>
 
-<PageTitle>Home</PageTitle>
+<div class="navbuttons-container">
+    @foreach(EpubChapter part in parts)
+    {
+        <button @onclick="() => DisplayChapter(part)">@part.Title</button>
+    }
+</div>
+<div class="html-container">
+    @((MarkupString)htmlOut)
+</div>
+@code {
 
-<h1>Hello, world!</h1>
+    private string epubUrl = "/home/lac/Calibre Library/Unknown/Gundam Unicorn vol 1 (2)/Gundam Unicorn vol 1 - Unknown.epub";
+    private string eepubUrl = "/home/lac/Downloads/yes.epub";
+    private string htmlOut {get;set;}
+    private int chapterID {get;set;}
 
-Welcome to your new app.
+    EpubBook book {get;set;}
+
+    List<EpubChapter> chapters {get;set;}
+    List<EpubChapter> parts {get;set;}
+    private string navbuttons {get;set;}
+    private bool hasChapters {get;set;}
+    protected override async Task OnInitializedAsync()
+    {
+
+        book = EpubReader.Read(epubUrl);
+        Console.WriteLine("yes");
+        chapters = book.TableOfContents;
+        Console.WriteLine(book.TableOfContents.Count);
+        if(book.TableOfContents.Count > 0)
+        {
+            hasChapters = true;
+        }
+        else
+        {
+            hasChapters = false;
+        }
+        parts = new List<EpubChapter>();
+        foreach(EpubChapter chapter in chapters)
+        {
+            parts.Add(chapter);
+            Console.WriteLine(chapter.Title);
+            if(chapter.SubChapters != null)
+            {
+                parts.AddRange(chapter.SubChapters);
+            }
+        }
+        foreach (EpubChapter part in parts)
+        {
+            Console.WriteLine(part.Title+" "+ part.FileName);
+        }
+    }
+    private void DisplayChapter(EpubChapter chapter)
+    {
+
+        try{
+
+            ICollection<EpubByteFile> images = book.Resources.Images;
+            if (!hasChapters)
+            {
+                return;
+            }
+            using (ZipArchive archive = ZipFile.OpenRead(epubUrl))
+            {
+
+                string html = "";
+                Console.WriteLine(chapter.FileName);
+                foreach(ZipArchiveEntry entry in archive.Entries)
+                {
+                    Console.WriteLine(entry.FullName);
+                    if(entry.Name == chapter.FileName)
+                    {
+                        
+                        using (StreamReader reader = new StreamReader(entry.Open()))
+                        {
+                            html = reader.ReadToEnd();
+
+                        }
+                    }
+
+                }
+                HtmlDocument document = new HtmlDocument();
+                document.LoadHtml(html);
+                var imgNodes = document.DocumentNode.SelectNodes("//img");
+                if(imgNodes != null)
+                {
+                    foreach(HtmlNode img in imgNodes)
+                    {
+                        string currentSrc = img.GetAttributeValue("src","");
+                        EpubByteFile selectedImage = null;
+                        foreach(EpubByteFile image in images)
+                        {
+                            if(image.FileName == currentSrc)
+                            {
+                                selectedImage = image;
+                                break;
+                            }
+                        }
+                        if(selectedImage != null)
+                        {
+                            img.SetAttributeValue("src",$"data:image/{Path.GetExtension(selectedImage.FileName).TrimStart('.')};base64,{Convert.ToBase64String(selectedImage.Content)}");
+                        }
+
+                    }
+                }
+                htmlOut = document.DocumentNode.InnerHtml;
+
+            }
+        }
+        catch
+        {
+            Console.WriteLine("problem");
+        }
+    }
+
+    
+}
