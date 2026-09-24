@@ -23,7 +23,6 @@
 /home/lac/dotnet/OBEIJEWebReader/obj/Debug/net10.0/scopedcss/Components/Layout/ReconnectModal.razor.rz.scp.css
 /home/lac/dotnet/OBEIJEWebReader/obj/Debug/net10.0/scopedcss/bundle/OBEIJEWebReader.styles.css
 /home/lac/dotnet/OBEIJEWebReader/obj/Debug/net10.0/scopedcss/projectbundle/OBEIJEWebReader.bundle.scp.css
-/home/lac/dotnet/OBEIJEWebReader/obj/Debug/net10.0/compressed/ou9wq714n2-{0}-w7mf952350-w7mf952350.gz
 /home/lac/dotnet/OBEIJEWebReader/obj/Debug/net10.0/compressed/aonn4baeck-{0}-bqjiyaj88i-bqjiyaj88i.gz
 /home/lac/dotnet/OBEIJEWebReader/obj/Debug/net10.0/compressed/y0q6eskthx-{0}-c2jlpeoesf-c2jlpeoesf.gz
 /home/lac/dotnet/OBEIJEWebReader/obj/Debug/net10.0/compressed/7vc7or6ggs-{0}-erw9l3u2r3-erw9l3u2r3.gz
@@ -98,5 +97,5 @@
 /home/lac/dotnet/OBEIJEWebReader/obj/Debug/net10.0/OBEIJEWebReader.csproj.AssemblyReference.cache
 /home/lac/dotnet/OBEIJEWebReader/obj/Debug/net10.0/OBEIJEWebReader.sourcelink.json
 /home/lac/dotnet/OBEIJEWebReader/obj/Debug/net10.0/OBEIJEWe.3850A11E.Up2Date
-/home/lac/dotnet/OBEIJEWebReader/obj/Debug/net10.0/compressed/q8hbgvcnu9-{0}-1s94mnijbg-1s94mnijbg.gz
 /home/lac/dotnet/OBEIJEWebReader/bin/Debug/net10.0/HtmlAgilityPack.dll
+/home/lac/dotnet/OBEIJEWebReader/obj/Debug/net10.0/compressed/u76zx39kdh-{0}-4ce9vtb276-4ce9vtb276.gz

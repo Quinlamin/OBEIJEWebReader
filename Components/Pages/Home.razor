@@ -7,22 +7,74 @@
 @using Microsoft.AspNetCore.SignalR
 @rendermode InteractiveServer
 @inject IJSRuntime JS
-<h3>Blazor EPUB Reader</h3>
+<PageTitle>@BookTitle</PageTitle>
 
-<div class="navbuttons-container">
-    @foreach(EpubChapter part in parts)
-    {
-        <button @onclick="() => DisplayChapter(part)">@part.Title</button>
-    }
+<div class="reader">
+
+    <!-- Header -->
+    <header class="reader-header">
+
+        <a href="/" class="back-button">
+            ← Library
+        </a>
+
+        <div class="book-title">
+            <strong>@BookTitle</strong>
+            <span>@ChapterTitle</span>
+        </div>
+
+    </header>
+
+
+    <!-- Chapter selector -->
+    <div class="chapter-bar">
+
+        <select value="@CurrentChapter" @onchange="DisplayChapter">
+            @{index = 0;}
+            @foreach (EpubChapter chapter in chapters)
+            {
+                <option value=@index>
+                    @chapter.Title
+                </option>
+                index++;
+            }
+        </select>
+
+    </div>
+
+
+    <!-- EPUB content -->
+    <main class="reader-content">
+
+        @((MarkupString)ChapterHtml)
+
+    </main>
+
+
+    <!-- Navigation -->
+    <footer class="reader-navigation">
+
+        <button @onclick="PreviousChapter">
+            ← Previous
+        </button>
+
+        <span>
+            @(CurrentChapter+1) / @TotalChapters
+        </span>
+
+        <button @onclick="NextChapter">
+            Next →
+        </button>
+
+    </footer>
+
 </div>
-<div class="html-container">
-    @((MarkupString)htmlOut)
-</div>
+
 @code {
-
-    private string epubUrl = "/home/lac/Calibre Library/Unknown/Gundam Unicorn vol 1 (2)/Gundam Unicorn vol 1 - Unknown.epub";
+    private int index = 0;
+    private string epubUrl = "/home/lac/Calibre Library/BEAUCHAMP, WILLIAM/hathaway vol01 (3)/hathaway vol01 - BEAUCHAMP, WILLIAM.epub";
     private string eepubUrl = "/home/lac/Downloads/yes.epub";
-    private string htmlOut {get;set;}
+    private string ChapterHtml {get;set;}
     private int chapterID {get;set;}
 
     EpubBook book {get;set;}
@@ -31,13 +83,42 @@
     List<EpubChapter> parts {get;set;}
     private string navbuttons {get;set;}
     private bool hasChapters {get;set;}
+    private string BookTitle {get;set;}
+    private string ChapterTitle {get;set;}
+    private int TotalChapters {get;set;}
+    private int CurrentChapter = 0;
+
+    async void NextChapter()
+    {
+        if(CurrentChapter < TotalChapters)
+        {
+            CurrentChapter++;
+            DisplayChapter();
+                await JS.InvokeVoidAsync("scrollToTop");
+
+        }
+        
+    }
+    async void PreviousChapter()
+    {
+        if(CurrentChapter > 1)
+        {
+            CurrentChapter--;
+            DisplayChapter();
+            await JS.InvokeVoidAsync("scrollToTop");
+
+        }
+        
+        
+    }
     protected override async Task OnInitializedAsync()
     {
 
         book = EpubReader.Read(epubUrl);
-        Console.WriteLine("yes");
+        BookTitle = book.Title;
+        
         chapters = book.TableOfContents;
-        Console.WriteLine(book.TableOfContents.Count);
+        
         if(book.TableOfContents.Count > 0)
         {
             hasChapters = true;
@@ -50,22 +131,22 @@
         foreach(EpubChapter chapter in chapters)
         {
             parts.Add(chapter);
-            Console.WriteLine(chapter.Title);
+            
             if(chapter.SubChapters != null)
             {
                 parts.AddRange(chapter.SubChapters);
             }
         }
-        foreach (EpubChapter part in parts)
-        {
-            Console.WriteLine(part.Title+" "+ part.FileName);
-        }
+        
+        TotalChapters = chapters.Count;
+        DisplayChapter();
     }
-    private void DisplayChapter(EpubChapter chapter)
+    
+    private void DisplayChapter()
     {
 
         try{
-
+            ChapterTitle = chapters[CurrentChapter].Title;
             ICollection<EpubByteFile> images = book.Resources.Images;
             if (!hasChapters)
             {
@@ -75,11 +156,11 @@
             {
 
                 string html = "";
-                Console.WriteLine(chapter.FileName);
+                
                 foreach(ZipArchiveEntry entry in archive.Entries)
                 {
-                    Console.WriteLine(entry.FullName);
-                    if(entry.Name == chapter.FileName)
+                    
+                    if(entry.Name == chapters[CurrentChapter].FileName)
                     {
                         
                         using (StreamReader reader = new StreamReader(entry.Open()))
@@ -114,7 +195,7 @@
 
                     }
                 }
-                htmlOut = document.DocumentNode.InnerHtml;
+                ChapterHtml = document.DocumentNode.InnerHtml;
 
             }
         }

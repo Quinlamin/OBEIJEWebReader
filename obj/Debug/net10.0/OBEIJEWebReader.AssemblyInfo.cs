@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OBEIJEWebReader")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2b3d581602d8716926abbece31f4df41bef6825f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d366afef37667d640855aaafb422c780f3a55e0c")]
 [assembly: System.Reflection.AssemblyProductAttribute("OBEIJEWebReader")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OBEIJEWebReader")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
