@@ -30,12 +30,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Db3VudGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/lac/dotnet/OBEIJEWebReader/Components/Pages/Epubs.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9FcHVicy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/lac/dotnet/OBEIJEWebReader/Components/Pages/Error.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9FcnJvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/lac/dotnet/OBEIJEWebReader/Components/Pages/Home.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Ib21lLnJhem9y
+[/home/lac/dotnet/OBEIJEWebReader/Components/Pages/Library.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9MaWJyYXJ5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/lac/dotnet/OBEIJEWebReader/Components/Pages/Loader.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Mb2FkZXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/lac/dotnet/OBEIJEWebReader/Components/Pages/NotFound.razor]

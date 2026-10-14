@@ -1,0 +1,30 @@
+@page "/"
+@using EpubSharp
+@rendermode InteractiveServer
+
+@foreach(ReaderFunctions.Book book in books)
+{
+    
+    <div class="bookHolder"><a href="epub/@book.bookID" class="bookHolder"><img src="@GetImage(book.bookPath)" class="bookImage"><img/><h5>@book.bookName</h5></a></div>
+}
+@code{
+    ReaderFunctions.Book[] books;
+    public string GetImage(string index)
+    {
+        Console.WriteLine(index);
+        var book = EpubReader.Read(index);
+
+        return $"data:image/png;base64,{Convert.ToBase64String(book.CoverImage)}";
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        books = ReaderFunctions.GetBooks().GetAwaiter().GetResult();
+        foreach(var book in books)
+        {
+            Console.WriteLine(book.bookPath);
+        }
+    }
+
+}

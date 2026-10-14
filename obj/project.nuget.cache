@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "MjsQXEWdCt4=",
+  "dgSpecHash": "Zs+B6xqOBX8=",
   "success": true,
   "projectFilePath": "/home/lac/dotnet/OBEIJEWebReader/OBEIJEWebReader.csproj",
   "expectedPackageFiles": [
@@ -21,7 +21,8 @@
     "/home/lac/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "/home/lac/.nuget/packages/microsoft.netcore.runtime.coreclr/1.1.1/microsoft.netcore.runtime.coreclr.1.1.1.nupkg.sha512",
     "/home/lac/.nuget/packages/microsoft.netcore.windows.apisets/1.0.1/microsoft.netcore.windows.apisets.1.0.1.nupkg.sha512",
-    "/home/lac/.nuget/packages/netstandard.library/1.6.1/netstandard.library.1.6.1.nupkg.sha512"
+    "/home/lac/.nuget/packages/netstandard.library/1.6.1/netstandard.library.1.6.1.nupkg.sha512",
+    "/home/lac/.nuget/packages/npgsql/10.0.3/npgsql.10.0.3.nupkg.sha512"
   ],
   "logs": [
     {

@@ -9,7 +9,8 @@
       "OBEIJEWebReader/1.0.0": {
         "dependencies": {
           "EpubSharp.dll": "1.1.5",
-          "HtmlAgilityPack": "1.13.0"
+          "HtmlAgilityPack": "1.13.0",
+          "Npgsql": "10.0.3"
         },
         "runtime": {
           "OBEIJEWebReader.dll": {}
@@ -114,6 +115,14 @@
           "Microsoft.CodeAnalysis.CSharp": "1.3.0",
           "Microsoft.CodeAnalysis.VisualBasic": "1.3.0"
         }
+      },
+      "Npgsql/10.0.3": {
+        "runtime": {
+          "lib/net10.0/Npgsql.dll": {
+            "assemblyVersion": "10.0.3.0",
+            "fileVersion": "10.0.3.0"
+          }
+        }
       }
     }
   },
@@ -171,6 +180,13 @@
       "sha512": "sha512-VmbeuJr3rHBRssZp3tR48mzWPzt4syJNXRKq/hfAmUbdSu03cR1HrMcmDAC1L00bs7l/PkDxbo/+v3X65JT+MA==",
       "path": "microsoft.netcore.app/1.1.1",
       "hashPath": "microsoft.netcore.app.1.1.1.nupkg.sha512"
+    },
+    "Npgsql/10.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7nb5YzXuvWWJxB0J8DiyL3we+X4FOctZrt0fIBnucOIaIevFEEwGQVZKtiu9olXdlNAK1eNgqSral6r/jlhI4w==",
+      "path": "npgsql/10.0.3",
+      "hashPath": "npgsql.10.0.3.nupkg.sha512"
     }
   }
 }

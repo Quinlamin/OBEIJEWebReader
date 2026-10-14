@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/epub/{PageSlug}"
 @using System.IO;
 @using System.IO.Compression;
 @using EpubSharp
@@ -6,6 +6,7 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Microsoft.AspNetCore.SignalR
 @rendermode InteractiveServer
+
 @inject IJSRuntime JS
 <PageTitle>@BookTitle</PageTitle>
 
@@ -29,7 +30,7 @@
     <!-- Chapter selector -->
     <div class="chapter-bar">
 
-        <select value="@CurrentChapter" @onchange="DisplayChapter">
+        <select value="@CurrentChapter" @onchange="OnListBoxChange">
             @{index = 0;}
             @foreach (EpubChapter chapter in chapters)
             {
@@ -71,6 +72,8 @@
 </div>
 
 @code {
+    [Parameter]
+    public string PageSlug {get; set;} = string.Empty;
     private int index = 0;
     private string epubUrl = "/home/lac/Calibre Library/BEAUCHAMP, WILLIAM/hathaway vol01 (3)/hathaway vol01 - BEAUCHAMP, WILLIAM.epub";
     private string eepubUrl = "/home/lac/Downloads/yes.epub";
@@ -78,7 +81,7 @@
     private int chapterID {get;set;}
 
     EpubBook book {get;set;}
-
+    ReaderFunctions.Book rBook {get;set;}
     List<EpubChapter> chapters {get;set;}
     List<EpubChapter> parts {get;set;}
     private string navbuttons {get;set;}
@@ -87,17 +90,17 @@
     private string ChapterTitle {get;set;}
     private int TotalChapters {get;set;}
     private int CurrentChapter = 0;
-
+    private int bookInd = 0;
     async void NextChapter()
     {
         if(CurrentChapter < TotalChapters)
         {
             CurrentChapter++;
             DisplayChapter();
-                await JS.InvokeVoidAsync("scrollToTop");
+            await JS.InvokeVoidAsync("scrollToTop");
 
         }
-        
+
     }
     async void PreviousChapter()
     {
@@ -108,17 +111,24 @@
             await JS.InvokeVoidAsync("scrollToTop");
 
         }
-        
-        
+
+
     }
     protected override async Task OnInitializedAsync()
     {
-
-        book = EpubReader.Read(epubUrl);
+        if(PageSlug == string.Empty || !int.TryParse(PageSlug, out int result))
+        {
+            return;
+        }
+        bookInd = int.Parse(PageSlug);
+        Console.WriteLine(bookInd);
+        rBook = ReaderFunctions.GetBook(bookInd);
+        Console.WriteLine(rBook.bookPath);
+        book = EpubReader.Read(rBook.bookPath);
         BookTitle = book.Title;
-        
+
         chapters = book.TableOfContents;
-        
+
         if(book.TableOfContents.Count > 0)
         {
             hasChapters = true;
@@ -131,17 +141,26 @@
         foreach(EpubChapter chapter in chapters)
         {
             parts.Add(chapter);
-            
+
             if(chapter.SubChapters != null)
             {
                 parts.AddRange(chapter.SubChapters);
             }
         }
-        
+
         TotalChapters = chapters.Count;
         DisplayChapter();
     }
-    
+    private void OnListBoxChange(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int chapterIndex))
+        {
+            CurrentChapter = chapterIndex;
+
+            // Display the selected chapter
+            DisplayChapter();
+        }
+    }
     private void DisplayChapter()
     {
 
@@ -152,7 +171,7 @@
             {
                 return;
             }
-            using (ZipArchive archive = ZipFile.OpenRead(epubUrl))
+            using (ZipArchive archive = ZipFile.OpenRead(rBook.bookPath))
             {
 
                 string html = "";

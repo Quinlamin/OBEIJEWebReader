@@ -1,0 +1,43 @@
+@page "/ee"
+@using System.Data.SqlTypes
+@using System.IO;
+@using EpubSharp
+@using Npgsql
+@rendermode InteractiveServer
+
+<button @onclick="Load">Load Epubs To Postgres</button>
+<button @onclick="Delete">Remove all Books</button>
+@code{
+
+    void Load()
+    {
+        using (var connection = new NpgsqlConnection(EnvironmentVariables.connectionString))
+        {
+            try
+            {
+                connection.Open();
+                string[] epubs = Directory.GetFiles(EnvironmentVariables.epubPath);
+                foreach(string epub in epubs)
+                {
+                    var book = EpubReader.Read(epub);
+
+                    string sql = $"INSERT INTO public.books (bookname, bookpath) VALUES ('{book.Title}', '{epub}');";
+                    Console.WriteLine(sql);
+                    using(var cmd = new NpgsqlCommand(sql, connection))
+                    {
+                        
+                        cmd.ExecuteScalar();
+                    }
+                }
+            }
+            catch
+            {
+                
+            }
+        }
+    }
+    void Delete()
+    {
+        
+    }
+}
