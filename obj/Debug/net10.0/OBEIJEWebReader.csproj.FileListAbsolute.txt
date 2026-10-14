@@ -100,4 +100,4 @@
 /home/lac/dotnet/OBEIJEWebReader/bin/Debug/net10.0/HtmlAgilityPack.dll
 /home/lac/dotnet/OBEIJEWebReader/obj/Debug/net10.0/compressed/u76zx39kdh-{0}-4ce9vtb276-4ce9vtb276.gz
 /home/lac/dotnet/OBEIJEWebReader/bin/Debug/net10.0/Npgsql.dll
-/home/lac/dotnet/OBEIJEWebReader/obj/Debug/net10.0/compressed/ssp9mpog4b-{0}-4b2b5eq26z-4b2b5eq26z.gz
+/home/lac/dotnet/OBEIJEWebReader/obj/Debug/net10.0/compressed/ssp9mpog4b-{0}-9jct7lmgra-9jct7lmgra.gz

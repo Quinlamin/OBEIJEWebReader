@@ -29,8 +29,9 @@
 
     <!-- Chapter selector -->
     <div class="chapter-bar">
-
-        <select value="@CurrentChapter" @onchange="OnListBoxChange">
+        @if (hasChapters)
+        {
+            <select value="@CurrentChapter" @onchange="OnListBoxChange">
             @{index = 0;}
             @foreach (EpubChapter chapter in chapters)
             {
@@ -39,8 +40,11 @@
                 </option>
                 index++;
             }
-        </select>
+            </select>
+        }
+        
 
+        
     </div>
 
 
@@ -51,8 +55,9 @@
 
     </main>
 
-
-    <!-- Navigation -->
+@if (hasChapters)
+    {
+        <!-- Navigation -->
     <footer class="reader-navigation">
 
         <button @onclick="PreviousChapter">
@@ -68,6 +73,27 @@
         </button>
 
     </footer>
+    }
+    else
+    {
+        <!-- Navigation -->
+    <footer class="reader-navigation">
+
+        <button @onclick="PreviousPage">
+            ← Previous
+        </button>
+
+        <span>
+            @(CurrentPage+1) / @totalPages
+        </span>
+
+        <button @onclick="NextPage">
+            Next →
+        </button>
+
+    </footer>
+    }
+
 
 </div>
 
@@ -90,6 +116,7 @@
     private string ChapterTitle {get;set;}
     private int TotalChapters {get;set;}
     private int CurrentChapter = 0;
+    private int CurrentPage = 0;
     private int bookInd = 0;
     async void NextChapter()
     {
@@ -114,6 +141,32 @@
 
 
     }
+    async void NextPage()
+    {
+        if(CurrentPage < totalPages)
+        {
+            CurrentPage++;
+            DisplayChapterPager();
+            await JS.InvokeVoidAsync("scrollToTop");
+
+        }
+
+    }
+    async void PreviousPage()
+    {
+        if(CurrentPage > 1)
+        {
+            CurrentPage--;
+            DisplayChapterPager();
+            await JS.InvokeVoidAsync("scrollToTop");
+
+        }
+
+
+    }
+    int totalPages {get;set;}
+    List<string> pageFiles {get;set;}
+
     protected override async Task OnInitializedAsync()
     {
         if(PageSlug == string.Empty || !int.TryParse(PageSlug, out int result))
@@ -136,6 +189,22 @@
         else
         {
             hasChapters = false;
+            totalPages = 0;
+            pageFiles = new List<string>();
+            using(ZipArchive archive = ZipFile.OpenRead(rBook.bookPath))
+            {
+                foreach(ZipArchiveEntry entry in archive.Entries)
+                {
+
+                    if (Path.GetExtension(entry.Name) == ".html")
+                    {
+                        totalPages++;
+                        pageFiles.Add(entry.FullName);
+                        Console.WriteLine(entry.FullName);
+                    }
+                }
+            }
+            Console.WriteLine(totalPages);
         }
         parts = new List<EpubChapter>();
         foreach(EpubChapter chapter in chapters)
@@ -161,16 +230,59 @@
             DisplayChapter();
         }
     }
+    private void DisplayChapterPager()
+    {
+        ICollection<EpubByteFile> images = book.Resources.Images;
+        using(ZipArchive archive = ZipFile.OpenRead(rBook.bookPath))
+        {
+            string html = "";
+            Console.WriteLine(CurrentChapter);
+            ZipArchiveEntry entry = archive.GetEntry(pageFiles[CurrentPage]);
+            using (StreamReader reader = new StreamReader(entry.Open()))
+                        {
+                            html = reader.ReadToEnd();
+
+                        }
+            HtmlDocument document = new HtmlDocument();
+                document.LoadHtml(html);
+                var imgNodes = document.DocumentNode.SelectNodes("//img");
+                if(imgNodes != null)
+                {
+                    foreach(HtmlNode img in imgNodes)
+                    {
+                        string currentSrc = img.GetAttributeValue("src","");
+                        EpubByteFile selectedImage = null;
+                        foreach(EpubByteFile image in images)
+                        {
+                            if(image.FileName == currentSrc)
+                            {
+                                Console.WriteLine(image.FileName);
+                                selectedImage = image;
+                                break;
+                            }
+                        }
+                        if(selectedImage != null)
+                        {
+                            img.SetAttributeValue("src",$"data:image/{Path.GetExtension(selectedImage.FileName).TrimStart('.')};base64,{Convert.ToBase64String(selectedImage.Content)}");
+                        }
+
+                    }
+                }
+            ChapterHtml = document.DocumentNode.InnerHtml;
+        }
+    }
     private void DisplayChapter()
     {
 
         try{
-            ChapterTitle = chapters[CurrentChapter].Title;
+            
             ICollection<EpubByteFile> images = book.Resources.Images;
             if (!hasChapters)
             {
+                DisplayChapterPager();
                 return;
             }
+            ChapterTitle = chapters[CurrentChapter].Title;
             using (ZipArchive archive = ZipFile.OpenRead(rBook.bookPath))
             {
 
@@ -218,9 +330,9 @@
 
             }
         }
-        catch
+        catch (Exception e)
         {
-            Console.WriteLine("problem");
+            Console.WriteLine(e.Message);
         }
     }
 

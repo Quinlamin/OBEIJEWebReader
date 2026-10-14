@@ -13,8 +13,11 @@
     {
         Console.WriteLine(index);
         var book = EpubReader.Read(index);
-
-        return $"data:image/png;base64,{Convert.ToBase64String(book.CoverImage)}";
+        if(book.CoverImage != null)
+        {
+            return $"data:image/png;base64,{Convert.ToBase64String(book.CoverImage)}";
+        }
+        return "";
     }
 
 
